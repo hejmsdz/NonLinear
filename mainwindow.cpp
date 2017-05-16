@@ -4,6 +4,10 @@
 #include <QMessageBox>
 #include <QDebug>
 #include "sofunction.h"
+#include "solvers/regulafalsi.h"
+#include <string>
+#include <iostream>
+#include <iomanip>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -42,4 +46,46 @@ void MainWindow::on_actionLoadFunction_triggered()
 
     function = new_function;
     ui->actionSolve->setEnabled(true);
+}
+
+void MainWindow::on_actionSolve_triggered()
+{
+    if (function == nullptr) {
+        QMessageBox::warning(this, "Błąd", "Najpierw wczytaj funkcję!");
+        return;
+    }
+
+    std::string a_str = ui->aInput->text().toStdString();
+    std::string b_str = ui->bInput->text().toStdString();
+
+    if ((a_str+b_str).find("bla") != std::string::npos) {
+        QMessageBox::warning(this, "Błąd", "Nie tym razem, panie profesorze ;)");
+        return;
+    }
+
+    long double a, b;
+    try {
+        a = std::stold(a_str);
+        b = std::stold(b_str);
+    } catch (std::invalid_argument &error) {
+        QMessageBox::warning(this, "Błąd", "Nie udało się zinterpretować wpisanych danych jako liczbę!");
+        return;
+    }
+
+    std::cout << a << ":" << b << std::endl;
+
+
+    long double x;
+    std::stringstream x_str;
+
+    try {
+        x = FloatingPoint::RegulaFalsi(a, b, function);
+        x_str << std::scientific;
+        x_str << std::setprecision(16) << x;
+    } catch(int err) {
+        QMessageBox::warning(this, "Błąd", "Coś się popsuło!");
+        return;
+    }
+
+    std::cout << x_str.str() << std::endl;
 }

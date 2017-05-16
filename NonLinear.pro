@@ -14,11 +14,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    sofunction.cpp
+    sofunction.cpp \
+    solvers/regulafalsi.cpp \
+    solvers/common.cpp
 
 HEADERS  += mainwindow.h \
     function.h \
-    sofunction.h
+    sofunction.h \
+    solvers/regulafalsi.h \
+    solvers/common.h
 
 FORMS    += mainwindow.ui
 

@@ -21,6 +21,8 @@ public:
 private slots:
     void on_actionLoadFunction_triggered();
 
+    void on_actionSolve_triggered();
+
 private:
     Ui::MainWindow *ui;
 };
