@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "function.h"
+#include "backend.h"
 
 namespace Ui {
 class MainWindow;
@@ -12,7 +12,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-    Function *function = nullptr;
+    Backend backend;
 
 public:
     explicit MainWindow(QWidget *parent = 0);
