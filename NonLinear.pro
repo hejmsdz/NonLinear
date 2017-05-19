@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     solvers/regulafalsi.cpp \
     solvers/common.cpp \
     backend.cpp \
-    solvers/secant.cpp
+    solvers/secant.cpp \
+    solvers/bisection.cpp
 
 HEADERS  += mainwindow.h \
     function.h \
@@ -26,7 +27,8 @@ HEADERS  += mainwindow.h \
     solvers/regulafalsi.h \
     solvers/common.h \
     backend.h \
-    solvers/secant.h
+    solvers/secant.h \
+    solvers/bisection.h
 
 FORMS    += mainwindow.ui
 

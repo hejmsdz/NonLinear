@@ -2,6 +2,7 @@
 #include "sofunction.h"
 #include "solvers/regulafalsi.h"
 #include "solvers/secant.h"
+#include "solvers/bisection.h"
 #include <iomanip>
 
 Backend::Backend() {
@@ -40,7 +41,8 @@ std::string Backend::solveFloatingPoint(std::string &a_str, std::string &b_str) 
     std::stringstream x_str;
 
     try {
-        x = FloatingPoint::Secant(a, b, function);
+        bool reached;
+        x = FloatingPoint::Bisection(a, b, function, 1e-16, 100, reached);
         x_str << std::scientific;
         x_str << std::setprecision(16) << x;
     } catch(int err) {

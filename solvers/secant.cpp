@@ -3,8 +3,9 @@
 #include <algorithm>
 
 long double FloatingPoint::Secant(long double a, long double b, Function *func) {
-    long double fa, fb, h, x, y;
+    check_interval(a, b, func);
 
+    long double fa, fb, h, x, y;
     h = 0.179372 * (b - a);
     a = a + h;
     b = b - h;
