@@ -3,15 +3,18 @@
 
 #include "function.h"
 
-typedef long double(*evaluate_function)(long double);
+typedef long double(*evalFloatType)(long double);
+typedef interval(*evalIntervalType)(interval);
 
 class SOFunction : public Function
 {
     void *lib;
-    evaluate_function f;
+    evalFloatType evalFloat;
+    evalIntervalType evalInterval;
 public:
     SOFunction(char library_path[]);
     long double evaluate(long double x);
+    interval evaluate(interval x);
     virtual ~SOFunction();
 };
 

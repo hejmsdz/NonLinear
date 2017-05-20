@@ -54,11 +54,14 @@
     </size>
    </property>
    <widget class="QGroupBox" name="initialInterval">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>20</y>
-      <width>199</width>
+      <width>191</width>
       <height>111</height>
      </rect>
     </property>
@@ -67,6 +70,9 @@
       <width>241</width>
       <height>111</height>
      </size>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
     </property>
     <property name="title">
      <string>Początkowy przedział</string>
@@ -108,6 +114,48 @@
        <widget class="QLineEdit" name="bInput"/>
       </item>
      </layout>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="arithmeticChoice">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>19</y>
+      <width>171</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Arytmetyka</string>
+    </property>
+    <widget class="QRadioButton" name="floatingPointArithmetic">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>161</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>zmiennoprzecinkowa</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="intervalArithmetic">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>161</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>przedziałowa</string>
+     </property>
     </widget>
    </widget>
   </widget>

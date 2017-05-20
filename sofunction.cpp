@@ -8,15 +8,21 @@ SOFunction::SOFunction(char library_path[])
     if (!lib) {
         throw dlerror();
     }
-    f = (evaluate_function)dlsym(lib, "evaluate");
-    if (!f) {
+    evalFloat = (evalFloatType)dlsym(lib, "evalFloat");
+    evalInterval = (evalIntervalType)dlsym(lib, "evalInterval");
+    if (!evalFloat || !evalInterval) {
         throw dlerror();
     }
 }
 
 long double SOFunction::evaluate(long double x)
 {
-    return f(x);
+    return evalFloat(x);
+}
+
+interval SOFunction::evaluate(interval x)
+{
+    return evalInterval(x);
 }
 
 SOFunction::~SOFunction()

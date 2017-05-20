@@ -1,4 +1,4 @@
-#include "bisection.h"
+ #include "bisection.h"
 
 long double FloatingPoint::Bisection(long double a, long double b, Function *func, long double tolerance, int iterations, bool &reached) {
     if (iterations < 1) {

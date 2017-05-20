@@ -41,10 +41,17 @@ void MainWindow::on_actionLoadFunction_triggered()
 void MainWindow::on_actionSolve_triggered()
 {
     std::string output, a_str, b_str;
+    int mode;
     a_str = ui->aInput->text().toStdString();
     b_str = ui->bInput->text().toStdString();
+    mode = ui->intervalArithmetic->isChecked();
+
     try {
-        output = backend.solveFloatingPoint(a_str, b_str);
+        if (mode == 1) {
+            output = backend.solveInterval(a_str, b_str);
+        } else {
+            output = backend.solveFloatingPoint(a_str, b_str);
+        }
     } catch (const char *error) {
         QMessageBox::warning(this, "Błąd", error);
         return;

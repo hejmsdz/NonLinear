@@ -32,4 +32,6 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui
 
-LIBS += -ldl
+LIBS += -ldl \
+        -lmpfr \
+        -lboost_system
