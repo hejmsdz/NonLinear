@@ -29,3 +29,7 @@ interval evalInterval(interval x) {
 and compile it using the command above.
 You can use functions available in `cmath`and `boost::numeric::interval_lib`
 (see the [documentation](http://www.boost.org/doc/libs/1_64_0/libs/numeric/interval/doc/interval.htm)).
+
+## References
+
+[1] A. Marciniak, D. Gregulec, J. Kaczmarek: *Podstawowe procedury numeryczne w języku Turbo Pascal*. Wydawnictwo Nakom, Poznań, 2000
