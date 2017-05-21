@@ -49,7 +49,6 @@ interval Backend::stringToInterval(const std::string &value, char separator) {
     }
 
     int old_rounding = fegetround();
-
     fesetround(FE_DOWNWARD);
     left = left_mp.convert_to<long double>();
     fesetround(FE_UPWARD);
@@ -80,8 +79,7 @@ std::string Backend::solveFloatingPoint(const std::string &a_str, const std::str
     x_str << std::setprecision(16);
 
     try {
-        bool reached;
-        x = FloatingPoint::Bisection(a, b, function, 1e-16, 100, reached);
+        x = RegulaFalsi(a, b, function);
         x_str << x;
     } catch(int err) {
         if (err == WRONG_INTERVAL) {
@@ -101,12 +99,12 @@ std::string Backend::solveInterval(const std::string &a_str, const std::string &
 
     std::stringstream x_str;
     x_str << std::scientific;
-    x_str << std::setprecision(60);
+    x_str << std::setprecision(16);
 
     try {
-        //bool reached;
-        //x = FloatingPoint::Bisection(a, b, function, 1e-16, 100, reached);
-        x_str << a.lower() << ":" << a.upper();
+        bool reached;
+        x = Bisection(a, b, function, 1e-16, 100, reached);
+        x_str << x.lower() << ":" << x.upper();
     } catch(int err) {
         if (err == WRONG_INTERVAL) {
             throw "Lewy koniec przedziału musi być mniejszy od prawego końca!";

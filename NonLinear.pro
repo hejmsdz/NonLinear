@@ -15,11 +15,8 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     sofunction.cpp \
-    solvers/regulafalsi.cpp \
     solvers/common.cpp \
-    backend.cpp \
-    solvers/secant.cpp \
-    solvers/bisection.cpp
+    backend.cpp
 
 HEADERS  += mainwindow.h \
     function.h \
