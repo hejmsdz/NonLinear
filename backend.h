@@ -3,6 +3,7 @@
 
 #include <string>
 #include "function.h"
+#include "solutionsummaries.h"
 
 class Backend
 {
@@ -10,15 +11,15 @@ class Backend
 
     static long double stringToFloat(const std::string &value);
     static interval stringToInterval(const std::string &value, char separator = ':');
-    std::string floatSummary(long double solution);
-    std::string intervalSummary(interval solution);
+    struct SingleFloatSummary floatSummary(long double solution);
+    struct SingleIntervalSummary intervalSummary(interval solution);
 public:
     Backend();
     ~Backend();
 
     void loadFunction(char filename[]);
-    std::string solveFloatingPoint(const std::string &a, const std::string &b);
-    std::string solveInterval(const std::string &a, const std::string &b);
+    struct FloatSummary solveFloatingPoint(const std::string &a, const std::string &b);
+    struct IntervalSummary solveInterval(const std::string &a, const std::string &b);
 };
 
 #endif // BACKEND_H

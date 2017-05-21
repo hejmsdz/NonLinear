@@ -58,46 +58,62 @@ interval Backend::stringToInterval(const std::string &value, char separator) {
     return interval(left, right);
 }
 
-std::string Backend::floatSummary(long double solution) {
-    std::stringstream out;
-    out << std::scientific;
-    out << std::setprecision(16);
+struct SingleFloatSummary Backend::floatSummary(long double solution) {
+    struct SingleFloatSummary out;
 
-    out << "Wynik:     " << solution << std::endl;
+    std::stringstream str;
+    str << std::scientific;
+    str << std::setprecision(16);
+
+    str << solution;
+    out.x = str.str();
+    str.str(std::string());
 
     long double y = function->evaluate(solution);
-    out << "Wartość:   " << y << std::endl;
-    out << std::endl;
+    str << y;
+    out.y = str.str();
+    str.str(std::string());
 
-    return out.str();
+    return out;
 }
 
-std::string Backend::intervalSummary(interval solution) {
-    std::stringstream out;
-    out << std::scientific;
-    out << std::setprecision(16);
+struct SingleIntervalSummary Backend::intervalSummary(interval solution) {
+    struct SingleIntervalSummary out;
+
+    std::stringstream str;
+    str << std::scientific;
+    str << std::setprecision(16);
 
     int old_rounding = fegetround();
 
     fesetround(FE_DOWNWARD);
-    out << "Wynik:     [" << solution.lower() << ", ";
+    str << "[" << solution.lower() << ", ";
     fesetround(FE_UPWARD);
-    out << solution.upper() << "]" << std::endl;
+    str << solution.upper() << "]";
+    out.x = str.str();
+    str.str(std::string());
+
     fesetround(FE_TONEAREST);
-    out << "Środek:    " << median(solution) << std::endl;
+    str << median(solution);
+    out.median = str.str();
+    str.str(std::string());
+
     fesetround(FE_UPWARD);
-    out << "Szerokość: " << width(solution) << std::endl;
+    str << width(solution);
+    out.width = str.str();
+    str.str(std::string());
 
     interval y = function->evaluate(solution);
     fesetround(FE_DOWNWARD);
-    out << "Wartość:   [" << y.lower() << ", ";
+    str << "[" << y.lower() << ", ";
     fesetround(FE_UPWARD);
-    out << y.upper() << "]" << std::endl;
-    out << std::endl;
+    str << y.upper() << "]";
+    out.y = str.str();
+    str.str(std::string());
 
     fesetround(old_rounding);
 
-    return out.str();
+    return out;
 }
 
 void Backend::loadFunction(char filename[]) {
@@ -111,23 +127,23 @@ void Backend::loadFunction(char filename[]) {
     function = new_function;
 }
 
-std::string Backend::solveFloatingPoint(const std::string &a_str, const std::string &b_str) {
+struct FloatSummary Backend::solveFloatingPoint(const std::string &a_str, const std::string &b_str) {
     long double a, b, x;
     a = stringToFloat(a_str);
     b = stringToFloat(b_str);
 
-    std::stringstream x_str;
+   struct FloatSummary out;
 
     try {
         x = RegulaFalsi(a, b, function);
-        x_str << "Regula falsi: " << std::endl << floatSummary(x);
+        out.regulafalsi = floatSummary(x);
 
         x = Secant(a, b, function);
-        x_str << "Secant: " << std::endl << floatSummary(x);
+        out.secant = floatSummary(x);
 
         bool reached;
         x = Bisection(a, b, function, 1e-16, 100, reached);
-        x_str << "Bisection: " << std::endl << floatSummary(x);
+        out.bisection = floatSummary(x);
     } catch(int err) {
         if (err == WRONG_INTERVAL) {
             throw "Lewy koniec przedziału musi być mniejszy od prawego końca!";
@@ -136,26 +152,26 @@ std::string Backend::solveFloatingPoint(const std::string &a_str, const std::str
         }
     }
 
-    return x_str.str();
+    return out;
 }
 
-std::string Backend::solveInterval(const std::string &a_str, const std::string &b_str) {
+struct IntervalSummary Backend::solveInterval(const std::string &a_str, const std::string &b_str) {
     interval a, b, x;
     a = stringToInterval(a_str);
     b = stringToInterval(b_str);
 
-    std::stringstream x_str;
+    struct IntervalSummary out;
 
     try {
         x = RegulaFalsi(a, b, function);
-        x_str << "Regula falsi: " << std::endl << intervalSummary(x);
+        out.regulafalsi = intervalSummary(x);
 
         x = Secant(a, b, function);
-        x_str << "Secant: " << std::endl << intervalSummary(x);
+        out.secant = intervalSummary(x);
 
         bool reached;
         x = Bisection(a, b, function, 1e-16, 100, reached);
-        x_str << "Bisection: " << std::endl << intervalSummary(x);
+        out.bisection = intervalSummary(x);
     } catch(int err) {
         if (err == WRONG_INTERVAL) {
             throw "Lewy koniec przedziału musi być mniejszy od prawego końca!";
@@ -164,5 +180,5 @@ std::string Backend::solveInterval(const std::string &a_str, const std::string &
         }
     }
 
-    return x_str.str();
+    return out;
 }

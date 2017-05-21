@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QStandardItemModel>
 #include "backend.h"
 
 namespace Ui {
@@ -13,6 +14,10 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
     Backend backend;
+    QStandardItemModel *model = nullptr;
+
+    void showFloatSummary(struct FloatSummary summary);
+    void showIntervalSummary(struct IntervalSummary summary);
 
 public:
     explicit MainWindow(QWidget *parent = 0);

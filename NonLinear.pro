@@ -25,7 +25,8 @@ HEADERS  += mainwindow.h \
     solvers/common.h \
     backend.h \
     solvers/secant.h \
-    solvers/bisection.h
+    solvers/bisection.h \
+    solutionsummaries.h
 
 FORMS    += mainwindow.ui
 
