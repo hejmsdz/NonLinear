@@ -10,6 +10,8 @@ class Backend
 
     static long double stringToFloat(const std::string &value);
     static interval stringToInterval(const std::string &value, char separator = ':');
+    std::string floatSummary(long double solution);
+    std::string intervalSummary(interval solution);
 public:
     Backend();
     ~Backend();

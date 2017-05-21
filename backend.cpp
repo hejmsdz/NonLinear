@@ -58,6 +58,48 @@ interval Backend::stringToInterval(const std::string &value, char separator) {
     return interval(left, right);
 }
 
+std::string Backend::floatSummary(long double solution) {
+    std::stringstream out;
+    out << std::scientific;
+    out << std::setprecision(16);
+
+    out << "Wynik:     " << solution << std::endl;
+
+    long double y = function->evaluate(solution);
+    out << "Wartość:   " << y << std::endl;
+    out << std::endl;
+
+    return out.str();
+}
+
+std::string Backend::intervalSummary(interval solution) {
+    std::stringstream out;
+    out << std::scientific;
+    out << std::setprecision(16);
+
+    int old_rounding = fegetround();
+
+    fesetround(FE_DOWNWARD);
+    out << "Wynik:     [" << solution.lower() << ", ";
+    fesetround(FE_UPWARD);
+    out << solution.upper() << "]" << std::endl;
+    fesetround(FE_TONEAREST);
+    out << "Środek:    " << median(solution) << std::endl;
+    fesetround(FE_UPWARD);
+    out << "Szerokość: " << width(solution) << std::endl;
+
+    interval y = function->evaluate(solution);
+    fesetround(FE_DOWNWARD);
+    out << "Wartość:   [" << y.lower() << ", ";
+    fesetround(FE_UPWARD);
+    out << y.upper() << "]" << std::endl;
+    out << std::endl;
+
+    fesetround(old_rounding);
+
+    return out.str();
+}
+
 void Backend::loadFunction(char filename[]) {
     Function *new_function;
 
@@ -75,12 +117,17 @@ std::string Backend::solveFloatingPoint(const std::string &a_str, const std::str
     b = stringToFloat(b_str);
 
     std::stringstream x_str;
-    x_str << std::scientific;
-    x_str << std::setprecision(16);
 
     try {
         x = RegulaFalsi(a, b, function);
-        x_str << x;
+        x_str << "Regula falsi: " << std::endl << floatSummary(x);
+
+        x = Secant(a, b, function);
+        x_str << "Secant: " << std::endl << floatSummary(x);
+
+        bool reached;
+        x = Bisection(a, b, function, 1e-16, 100, reached);
+        x_str << "Bisection: " << std::endl << floatSummary(x);
     } catch(int err) {
         if (err == WRONG_INTERVAL) {
             throw "Lewy koniec przedziału musi być mniejszy od prawego końca!";
@@ -98,13 +145,17 @@ std::string Backend::solveInterval(const std::string &a_str, const std::string &
     b = stringToInterval(b_str);
 
     std::stringstream x_str;
-    x_str << std::scientific;
-    x_str << std::setprecision(16);
 
     try {
+        x = RegulaFalsi(a, b, function);
+        x_str << "Regula falsi: " << std::endl << intervalSummary(x);
+
+        x = Secant(a, b, function);
+        x_str << "Secant: " << std::endl << intervalSummary(x);
+
         bool reached;
         x = Bisection(a, b, function, 1e-16, 100, reached);
-        x_str << x.lower() << ":" << x.upper();
+        x_str << "Bisection: " << std::endl << intervalSummary(x);
     } catch(int err) {
         if (err == WRONG_INTERVAL) {
             throw "Lewy koniec przedziału musi być mniejszy od prawego końca!";

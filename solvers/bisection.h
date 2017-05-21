@@ -27,10 +27,14 @@ template<typename T> T Bisection(T a, T b, Function *func, long double tolerance
         fa = func->evaluate(a);
         fb = func->evaluate(x);
 
-        if (fa * fb > 0) {
-            a = x;
-        } else {
-            b = x;
+        try {
+            if (fa * fb > 0) {
+                a = x;
+            } else {
+                b = x;
+            }
+        } catch (boost::numeric::interval_lib::comparison_error &error) {
+            break;
         }
     } while (i < iterations && !reached);
 

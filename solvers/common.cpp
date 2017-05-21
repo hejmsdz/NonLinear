@@ -37,8 +37,3 @@ int sgn(interval x) {
     }
     return 0;
 }
-
-long double cerlt(long double x, long double y) {
-    return x < y;
-}
-

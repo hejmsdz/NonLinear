@@ -3,7 +3,13 @@
 
 #include <boost/numeric/interval.hpp>
 
-typedef boost::numeric::interval<long double> interval;
+typedef boost::numeric::interval<
+    long double,
+    boost::numeric::interval_lib::policies<
+        boost::numeric::interval_lib::save_state< boost::numeric::interval_lib::rounded_transc_exact<long double> >,
+        boost::numeric::interval_lib::checking_no_empty<long double>
+    >
+> interval;
 
 class Function
 {
