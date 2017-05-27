@@ -30,7 +30,6 @@ interval Bisection(interval a, interval b, Function *func, long double tolerance
         right = interval(midpoint, upper(x));
 
         y = func->evaluate(mid);
-        std::cout << Backend::intervalToString(x) << Backend::intervalToString(func->evaluate(x)) << std::endl;
 
         if ((singleton(y) && cereq(y, 0.0l))) {
             reached = true;
