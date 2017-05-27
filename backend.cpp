@@ -15,6 +15,22 @@ Backend::~Backend() {
     delete function;
 }
 
+std::string Backend::intervalToString(interval x, int decimals) {
+    std::stringstream str;
+    str << std::scientific;
+    str << std::setprecision(decimals);
+
+    int old_rounding = fegetround();
+
+    fesetround(FE_DOWNWARD);
+    str << "[" << x.lower() << ", ";
+    fesetround(FE_UPWARD);
+    str << x.upper() << "]";
+
+    fesetround(old_rounding);
+    return str.str();
+}
+
 long double Backend::stringToFloat(const std::string &value) {
     if (value.find("bla") != std::string::npos) {
         throw "Nie tym razem, panie profesorze ;)";
@@ -63,7 +79,7 @@ struct SingleFloatSummary Backend::floatSummary(long double solution) {
 
     std::stringstream str;
     str << std::scientific;
-    str << std::setprecision(16);
+    str << std::setprecision(decimals);
 
     str << solution;
     out.x = str.str();
@@ -82,36 +98,24 @@ struct SingleIntervalSummary Backend::intervalSummary(interval solution) {
 
     std::stringstream str;
     str << std::scientific;
-    str << std::setprecision(16);
+    str << std::setprecision(decimals);
 
-    int old_rounding = fegetround();
+    out.x = intervalToString(solution, decimals);
 
-    fesetround(FE_DOWNWARD);
-    str << "[" << solution.lower() << ", ";
-    fesetround(FE_UPWARD);
-    str << solution.upper() << "]";
-    out.x = str.str();
-    str.str(std::string());
-
-    fesetround(FE_TONEAREST);
     str << median(solution);
     out.median = str.str();
     str.str(std::string());
 
+    int old_rounding = fegetround();
     fesetround(FE_UPWARD);
-    str << width(solution);
+    str << upper(solution) - lower(solution);
     out.width = str.str();
     str.str(std::string());
 
-    interval y = function->evaluate(solution);
-    fesetround(FE_DOWNWARD);
-    str << "[" << y.lower() << ", ";
-    fesetround(FE_UPWARD);
-    str << y.upper() << "]";
-    out.y = str.str();
-    str.str(std::string());
-
     fesetround(old_rounding);
+
+    interval y = function->evaluate(solution);
+    out.y = intervalToString(y, decimals);
 
     return out;
 }
@@ -142,7 +146,7 @@ struct FloatSummary Backend::solveFloatingPoint(const std::string &a_str, const 
         out.secant = floatSummary(x);
 
         bool reached;
-        x = Bisection(a, b, function, 1e-16, 100, reached);
+        x = Bisection(a, b, function, 1e-16, 60, reached);
         out.bisection = floatSummary(x);
     } catch(int err) {
         if (err == WRONG_INTERVAL) {
@@ -170,7 +174,7 @@ struct IntervalSummary Backend::solveInterval(const std::string &a_str, const st
         out.secant = intervalSummary(x);
 
         bool reached;
-        x = Bisection(a, b, function, 1e-16, 100, reached);
+        x = Bisection(a, b, function, 1e-16, 60, reached);
         out.bisection = intervalSummary(x);
     } catch(int err) {
         if (err == WRONG_INTERVAL) {

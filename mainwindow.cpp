@@ -87,7 +87,7 @@ void MainWindow::showIntervalSummary(struct IntervalSummary summary) {
     ui->result->resizeColumnsToContents();
 }
 
-void MainWindow::on_actionLoadFunction_triggered()
+void MainWindow::on_loadFunction_clicked()
 {
     QString library_path = QFileDialog::getOpenFileName(this, "Wczytaj funkcję",
                                                         QDir::currentPath(),
@@ -104,16 +104,17 @@ void MainWindow::on_actionLoadFunction_triggered()
         return;
     }
 
-    ui->actionSolve->setEnabled(true);
+    ui->solve->setEnabled(true);
 }
 
-void MainWindow::on_actionSolve_triggered()
+void MainWindow::on_solve_clicked()
 {
     std::string a_str, b_str;
     int mode;
     a_str = ui->aInput->text().toStdString();
     b_str = ui->bInput->text().toStdString();
     mode = ui->intervalArithmetic->isChecked();
+    backend.decimals = ui->decimals->value();
 
     try {
         if (mode == 1) {

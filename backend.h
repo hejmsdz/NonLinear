@@ -9,13 +9,17 @@ class Backend
 {
     Function *function = nullptr;
 
-    static long double stringToFloat(const std::string &value);
-    static interval stringToInterval(const std::string &value, char separator = ':');
     struct SingleFloatSummary floatSummary(long double solution);
     struct SingleIntervalSummary intervalSummary(interval solution);
 public:
     Backend();
     ~Backend();
+
+    int decimals = 16;
+
+    static std::string intervalToString(interval x, int decimals = 16);
+    static long double stringToFloat(const std::string &value);
+    static interval stringToInterval(const std::string &value, char separator = ':');
 
     void loadFunction(char filename[]);
     struct FloatSummary solveFloatingPoint(const std::string &a, const std::string &b);

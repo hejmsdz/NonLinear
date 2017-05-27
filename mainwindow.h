@@ -24,9 +24,9 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_actionLoadFunction_triggered();
+    void on_loadFunction_clicked();
 
-    void on_actionSolve_triggered();
+    void on_solve_clicked();
 
 private:
     Ui::MainWindow *ui;
