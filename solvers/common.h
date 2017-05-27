@@ -2,7 +2,6 @@
 #define COMMON_H
 
 #include "../function.h"
-#include <boost/io/ios_state.hpp>
 
 #define WRONG_INTERVAL 1
 #define NO_REAL_ROOTS 2

@@ -16,7 +16,7 @@ template<typename T> T Secant(T a, T b, Function *func) {
     fa = func->evaluate(a);
     fb = func->evaluate(b);
 
-    if (abs(fa) < abs(fb)) {
+    if (cerlt(abs(fa), abs(fb))) {
         std::swap(a, b);
         std::swap(fa, fb);
     }

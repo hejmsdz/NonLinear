@@ -15,7 +15,7 @@ void check_interval(interval a, interval b, Function *func) {
         throw WRONG_INTERVAL;
     }
 
-    if (posgt(func->evaluate(a) * func->evaluate(b), interval(0))) {
+    if (!zero_in(func->evaluate(hull(a, b)))) {
         throw NO_REAL_ROOTS;
     }
 }
