@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+ 	\documentclass[12pt]{article}
 \usepackage[polish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -11,16 +11,108 @@
 \begin{document}
 	\maketitle
 
+	\section{Informacje ogólne}
+		\subsection{Zastosowanie}
+			Każda z niżej opisanych metod rozwiązuje w arytmetyce przedziałowej
+			równanie $f(x) = 0$, gdzie $f$ jest dowolną funkcją rzeczywistą.
+			Do znalezienia rozwiązania potrzebny jest początkowy przedział $[a, b]$,
+			który jest potem sukcesywnie zawężany.
+
+		\subsection{Sposób wczytania funkcji}
+			Wymagana przez każdą metodę funkcja $f$ jest przekazywana jako wskaźnik
+			do obiektu klasy \texttt{Function}. Można samemu napisać podklasę realizującą
+			jakąkolwiek funkcję albo posłużyć się klasą \texttt{SOFunction},
+			która umożliwia załadowanie jej z biblioteki dynamicznej \texttt{.so}
+			pod systemami operacyjnymi z rodziny GNU/Linux.
+			Sposób utworzenia i skompilowania kompatybilnej biblioteki opisany jest
+			\href{https://github.com/hejmsdz/NonLinear/tree/master/functions}{na stronie projektu w serwisie GitHub}.
+
+		\subsection{Identyfikatory nielokalne}
+			W pliku nagłówkowym \texttt{common.h} znajdują się deklaracje
+			pomocniczych funkcji i stałych, z których korzystają wszystkie metody:
+
+			\begin{description}
+				\item[\texttt{Function}] \hfill\\
+					klasa udostępniająca metodę \texttt{interval evaluate(interval x)}.
+				\item[\texttt{WRONG\_INTERVAL}] \hfill\\
+					stała o wartości liczbowej 1; jest to wyjątek, którym funkcja sygnalizuje, że w podanym przedziale początkowym lewy koniec jest większy lub równy od prawego końca,
+				\item[\texttt{NO\_REAL\_ROOTS}] \hfill\\
+					stała o wartości liczbowej 2; jest to wyjątek, którym funkcja sygnalizuje brak pierwiastków rzeczywistych w podanym przedziale początkowym,
+				\item[\texttt{check\_interval}] \hfill\\
+					pomocnicza funkcja, która sprawdza warunki dla przedziału początkowego, a niespełnienie ich sygnalizuje zgłoszeniem jednego z powyższych wyjątków.
+			\end{description}
+
+
 	\section{Metoda połowienia przedziału}
 		\subsection{Zastosowanie}
+			Funkcja \texttt{Bisection} znajduje wartość pierwiastka równania
+			$f(x) = 0$ metodą połowienia przedziału w arytmetyce przedziałowej.
+
 		\subsection{Opis metody}
+			Metoda połowienia wykorzystuje własność Darboux, która mówi,
+			że jeśli dana jest funkcja ciągła $f$ i przedział rzeczywisty $[a, b]$ takie,
+			że $f(a) = y_a$ i $f(b) = y_b$, to funkcja ta przyjmuje w przedziale $(a, b)$
+			wszystkie wartości pośrednie między $y_a$ a $y_b$.
+			W szczególności oznacza to, że jeśli taka funkcja ma
+			na końcach przedziału różne znaki, to istnieje tam miejsce zerowe,
+			czyli punkt $x_0 \in (a, b)$, dla którego $f(x_0) = 0$.
+
+			Algorytm rozpoczyna pracę z danym przedziałem $[a, b]$,
+			o którym wiadomo, że $f(a) \cdot f(b) < 0$.
+			W każdej iteracji następuje wyznaczenie środka przedziału $m = \frac{a+b}{2}$
+			i podział go na dwie połowy $[a, m]$ i $[m, b]$.
+			Jeżeli $f(a) \cdot f(m) < 0$, to przeszukiwanie jest kontynuowane
+			w przedziale $[a, m]$, w przeciwnym razie $[m, b]$.
+
+			Pętla powtarza się aż do momentu, w którym środek przedziału $m$ będzie miejscem zerowym funkcji.
+			Ponieważ w praktyce może to jednak nie nastąpić, do przerwanie algorytmu dojdzie też,
+			gdy szerokość przedziału będzie mniejsza niż zadana tolerancja $\epsilon$
+			lub po wykonaniu określonej liczby iteracji.
+			W takim wypadku wynikiem będzie najwęższy uzyskany przedział zawierający pierwiastek.
+
 		\subsection{Wywołanie funkcji}
+			\texttt{Bisection(a, b, func, tolerance, iterations, reached)}
+
 		\subsection{Dane}
+			\begin{description}
+				\item[\texttt{a}, \texttt{b}] \hfill\\ lewy i prawy koniec przedziału zawierającego pierwiastek,
+				\item[\texttt{func}] \hfill\\ funkcja, której miesce zerowe należy znależć,
+				\item[\texttt{tolerance}] \hfill\\ największa akceptowalna szerokość przedziału wynikowego,
+				\item[\texttt{iterations}] \hfill\\ maksymalna liczba iteracji.
+			\end{description}
+
 		\subsection{Wyniki}
+			\begin{description}
+				\item[\texttt{Bisection(a, b, func, tolerance, iterations, reached)}] \hfill\\
+					przedział zawierający miejsce zerowe
+			\end{description}
+
 		\subsection{Inne parametry}
+			\begin{description}
+				\item[\texttt{reached}] \hfill\\ określa, czy w \texttt{iterations} iteracjach udało się zmieścić w wymaganej tolerancji.
+			\end{description}
+
 		\subsection{Typy parametrów}
+			\texttt{\textbf{interval} a, \textbf{interval} b, \textbf{Function*} func, \textbf{long double} tolerance, \textbf{int} iterations, \textbf{bool\&} reached}
+
 		\subsection{Identyfikatory nielokalne}
+			\begin{description}
+				\item[\texttt{NOT\_ENOUGH\_ITERATIONS}] \hfill\\
+					stała o wartości liczbowej 3; jest to wyjątek, którym funkcja sygnalizuje, że parametr \texttt{iterations} nie jest liczbą dodatnią.
+			\end{description}
+
 		\subsection{Przykłady}
+			\begin{tabular}{|r|c|c|c|c||c|}
+				\hline
+				Równanie & a & b & liczba iteracji & $\epsilon$ & $x_0$ \\\hline
+
+				$x^2 - 2 = 0$ & 1 & 2 & 60 & $10^{-16}$ & [1.41421356237309503, 1.41421356237309509] \\\hline
+				$xe^{\sqrt{x+1}} - 1 = 0$ & -1 & 1 & 60 & $10^{-16}$ & [3.17347582146508266, 3.17347582146508323] \\\hline
+				$\sin{x} \cdot (\sin{x} + \frac{1}{2}) - \frac{1}{2} = 0$ & 0 & 1 & 60 & $10^{-16}$ & [5.2359877559829803e-01, 5.2359877559829810e-01] \\\hline
+
+			\end{tabular}
+
+
 
 	\section{Metoda \textsl{regula falsi}}
 		\subsection{Zastosowanie}
