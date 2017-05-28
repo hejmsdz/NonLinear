@@ -20,14 +20,19 @@ std::string Backend::intervalToString(interval x, int decimals) {
     str << std::scientific;
     str << std::setprecision(decimals);
 
-    int old_rounding = fegetround();
+    if (singleton(x)) {
+        str << "[" << median(x) << "]";
+    } else {
+        int old_rounding = fegetround();
 
-    fesetround(FE_DOWNWARD);
-    str << "[" << x.lower() << ", ";
-    fesetround(FE_UPWARD);
-    str << x.upper() << "]";
+        fesetround(FE_DOWNWARD);
+        str << "[" << x.lower() << ", ";
+        fesetround(FE_UPWARD);
+        str << x.upper() << "]";
 
-    fesetround(old_rounding);
+        fesetround(old_rounding);
+    }
+
     return str.str();
 }
 
