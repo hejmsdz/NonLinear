@@ -29,8 +29,8 @@ void MainWindow::showFloatSummary(struct FloatSummary summary) {
     cols.append("y");
 
     rows.append("bisekcja");
-    rows.append("sieczne");
     rows.append("regula falsi");
+    rows.append("sieczne");
 
     model->index(1,1, model->index(0,0));
     model->setHorizontalHeaderLabels(rows);
@@ -38,10 +38,10 @@ void MainWindow::showFloatSummary(struct FloatSummary summary) {
 
     model->setItem(0, 0, new QStandardItem(QString::fromStdString(summary.bisection.x)));
     model->setItem(1, 0, new QStandardItem(QString::fromStdString(summary.bisection.y)));
-    model->setItem(0, 1, new QStandardItem(QString::fromStdString(summary.secant.x)));
-    model->setItem(1, 1, new QStandardItem(QString::fromStdString(summary.secant.y)));
-    model->setItem(0, 2, new QStandardItem(QString::fromStdString(summary.regulafalsi.x)));
-    model->setItem(1, 2, new QStandardItem(QString::fromStdString(summary.regulafalsi.y)));
+    model->setItem(0, 1, new QStandardItem(QString::fromStdString(summary.regulafalsi.x)));
+    model->setItem(1, 1, new QStandardItem(QString::fromStdString(summary.regulafalsi.y)));
+    model->setItem(0, 2, new QStandardItem(QString::fromStdString(summary.secant.x)));
+    model->setItem(1, 2, new QStandardItem(QString::fromStdString(summary.secant.y)));
 
     ui->result->setModel(model);
     ui->result->resizeRowsToContents();
@@ -62,8 +62,8 @@ void MainWindow::showIntervalSummary(struct IntervalSummary summary) {
     cols.append("y");
 
     rows.append("bisekcja");
-    rows.append("sieczne");
     rows.append("regula falsi");
+    rows.append("sieczne");
 
     model->index(1,1, model->index(0,0));
     model->setHorizontalHeaderLabels(rows);
@@ -73,14 +73,14 @@ void MainWindow::showIntervalSummary(struct IntervalSummary summary) {
     model->setItem(1, 0, new QStandardItem(QString::fromStdString(summary.bisection.median)));
     model->setItem(2, 0, new QStandardItem(QString::fromStdString(summary.bisection.width)));
     model->setItem(3, 0, new QStandardItem(QString::fromStdString(summary.bisection.y)));
-    model->setItem(0, 1, new QStandardItem(QString::fromStdString(summary.secant.x)));
-    model->setItem(1, 1, new QStandardItem(QString::fromStdString(summary.secant.median)));
-    model->setItem(2, 1, new QStandardItem(QString::fromStdString(summary.secant.width)));
-    model->setItem(3, 1, new QStandardItem(QString::fromStdString(summary.secant.y)));
-    model->setItem(0, 2, new QStandardItem(QString::fromStdString(summary.regulafalsi.x)));
-    model->setItem(1, 2, new QStandardItem(QString::fromStdString(summary.regulafalsi.median)));
-    model->setItem(2, 2, new QStandardItem(QString::fromStdString(summary.regulafalsi.width)));
-    model->setItem(3, 2, new QStandardItem(QString::fromStdString(summary.regulafalsi.y)));
+    model->setItem(0, 1, new QStandardItem(QString::fromStdString(summary.regulafalsi.x)));
+    model->setItem(1, 1, new QStandardItem(QString::fromStdString(summary.regulafalsi.median)));
+    model->setItem(2, 1, new QStandardItem(QString::fromStdString(summary.regulafalsi.width)));
+    model->setItem(3, 1, new QStandardItem(QString::fromStdString(summary.regulafalsi.y)));
+    model->setItem(0, 2, new QStandardItem(QString::fromStdString(summary.secant.x)));
+    model->setItem(1, 2, new QStandardItem(QString::fromStdString(summary.secant.median)));
+    model->setItem(2, 2, new QStandardItem(QString::fromStdString(summary.secant.width)));
+    model->setItem(3, 2, new QStandardItem(QString::fromStdString(summary.secant.y)));
 
     ui->result->setModel(model);
     ui->result->resizeRowsToContents();
