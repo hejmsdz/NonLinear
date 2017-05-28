@@ -140,7 +140,7 @@
       Pętla trwa dopóki spełniony jest warunek $a > x > b$.
 
     \subsection{Wywołanie funkcji}
-  			\texttt{RegulaFalsi(a, b, func)}
+  		\texttt{RegulaFalsi(a, b, func)}
 
   	\subsection{Dane}
   		\begin{description}
@@ -167,18 +167,41 @@
 
 	\section{Metoda siecznych}
 		\subsection{Zastosowanie}
+    Funkcja \texttt{Secant} znajduje wartość pierwiastka równania
+    $f(x) = 0$ metodą siecznych w arytmetyce przedziałowej.
+
 		\subsection{Opis metody}
+
+
 		\subsection{Wywołanie funkcji}
+      \texttt{Secant(a, b, func)}
+
 		\subsection{Dane}
+      \begin{description}
+        \item[\texttt{a}, \texttt{b}] \hfill\\ lewy i prawy koniec przedziału zawierającego pierwiastek,
+        \item[\texttt{func}] \hfill\\ funkcja, której miesce zerowe należy znależć.
+      \end{description}
+
 		\subsection{Wyniki}
+      \begin{description}
+        \item[\texttt{Secant(a, b, func)}] \hfill\\
+          przedział zawierający miejsce zerowe
+      \end{description}
+
 		\subsection{Inne parametry}
+      Brak.
+
 		\subsection{Typy parametrów}
+      \texttt{\textbf{interval} a, \textbf{interval} b, \textbf{Function*} func}
+
 		\subsection{Identyfikatory nielokalne}
+      Brak, nie licząc wymienionych w punkcie \ref{nonlocal}.
+
 		\subsection{Przykłady}
 
 	\section{Bibliografia}
 		\begin{itemize}
-			\item A. Marciniak, D. Gregulec, J. Kaczmarek: \textsl{Podstawowe procedury numeryczne w języku Turbo Pascal}. Wydawnictwo Nakom, Poznań, 2000 r.
+		  \item A. Marciniak, D. Gregulec, J. Kaczmarek: \textsl{Podstawowe procedury numeryczne w języku Turbo Pascal}. NAKOM, Poznań, 2000~r.
 		\end{itemize}
 
 \end{document}
