@@ -29,7 +29,7 @@ interval Secant(interval a, interval b, Function *func) {
         x = b + fb*h/x;
         y = func->evaluate(x);
         if (overlap(a, x) || overlap(b, x) || zero_in(y)) {
-            return x;
+            return hull(a, b);
         }
 
         fa = fb;
