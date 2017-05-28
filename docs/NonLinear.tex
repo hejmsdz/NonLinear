@@ -1,4 +1,4 @@
- 	\documentclass[12pt]{article}
+\documentclass[12pt]{article}
 \usepackage[polish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -27,7 +27,7 @@
 			Sposób utworzenia i skompilowania kompatybilnej biblioteki opisany jest
 			\href{https://github.com/hejmsdz/NonLinear/tree/master/functions}{na stronie projektu w serwisie GitHub}.
 
-		\subsection{Identyfikatory nielokalne}
+		\subsection{Identyfikatory nielokalne}\label{nonlocal}
 			W pliku nagłówkowym \texttt{common.h} znajdują się deklaracje
 			pomocniczych funkcji i stałych, z których korzystają wszystkie metody:
 
@@ -96,7 +96,9 @@
 			\texttt{\textbf{interval} a, \textbf{interval} b, \textbf{Function*} func, \textbf{long double} tolerance, \textbf{int} iterations, \textbf{bool\&} reached}
 
 		\subsection{Identyfikatory nielokalne}
-			\begin{description}
+      Oprócz wymienionych w punkcie \ref{nonlocal} plik źródłowy definiuje następujące identyfikatory nielokalne:
+
+      \begin{description}
 				\item[\texttt{NOT\_ENOUGH\_ITERATIONS}] \hfill\\
 					stała o wartości liczbowej 3; jest to wyjątek, którym funkcja sygnalizuje, że parametr \texttt{iterations} nie jest liczbą dodatnią.
 			\end{description}
@@ -113,16 +115,54 @@
 			\end{tabular}
 
 
-
 	\section{Metoda \textsl{regula falsi}}
 		\subsection{Zastosowanie}
+  		Funkcja \texttt{RegulaFalsi} znajduje wartość pierwiastka równania
+  		$f(x) = 0$ metodą \textsl{regula falsi} w arytmetyce przedziałowej.
+
 		\subsection{Opis metody}
-		\subsection{Wywołanie funkcji}
-		\subsection{Dane}
+  		Metoda \textsl{regula falsi} opiera się na założeniu, że każdą funkcję
+  		można w odpowiednio małym zakresie argumentów traktować jak funkcję liniową.
+      Choć z matematycznego punktu widzenia jest to nieprawda (stąd nazwa --
+      \textsl{regula falsi} to po łacinie fałszywa zasada albo fałszywa prosta),
+      to obliczanie kolejnych miejsc zerowych tak, jakby funkcja
+      rzeczywiście była na tym odcinku liniowa, daje coraz lepsze przybliżenia
+      prawdziwego pierwiastka.
+
+      W każdej iteracji algorytmu wyznaczany jest punkt przecięcia prostej
+      przechodzącej przez punkty $(a, f(a))$ i $(b, f(b))$ z osią $X$:
+
+      \begin{equation*}
+        x = b - f(b) \cdot \frac{b - a}{f(b) - f(a)},
+      \end{equation*}
+
+      a następnie uzyskany punkt zastępuje lewy lub prawy koniec przedziału początkowego.
+      Pętla trwa dopóki spełniony jest warunek $a > x > b$.
+
+    \subsection{Wywołanie funkcji}
+  			\texttt{RegulaFalsi(a, b, func)}
+
+  	\subsection{Dane}
+  		\begin{description}
+				\item[\texttt{a}, \texttt{b}] \hfill\\ lewy i prawy koniec przedziału zawierającego pierwiastek,
+				\item[\texttt{func}] \hfill\\ funkcja, której miesce zerowe należy znależć.
+			\end{description}
+
 		\subsection{Wyniki}
+			\begin{description}
+				\item[\texttt{RegulaFalsi(a, b, func)}] \hfill\\
+					przedział zawierający miejsce zerowe
+			\end{description}
+
 		\subsection{Inne parametry}
+			Brak.
+
 		\subsection{Typy parametrów}
+			\texttt{\textbf{interval} a, \textbf{interval} b, \textbf{Function*} func}
+
 		\subsection{Identyfikatory nielokalne}
+      Brak, nie licząc wymienionych w punkcie \ref{nonlocal}.
+
 		\subsection{Przykłady}
 
 	\section{Metoda siecznych}
