@@ -16,7 +16,10 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     sofunction.cpp \
     solvers/common.cpp \
-    backend.cpp
+    backend.cpp \
+    solvers/bisection.cpp \
+    solvers/regulafalsi.cpp \
+    solvers/secant.cpp
 
 HEADERS  += mainwindow.h \
     function.h \
