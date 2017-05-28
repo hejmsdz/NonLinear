@@ -92,6 +92,9 @@
 				\item[\texttt{reached}] \hfill\\ określa, czy w \texttt{iterations} iteracjach udało się zmieścić w wymaganej tolerancji.
 			\end{description}
 
+      Jeśli początkowy przedział $[a, b]$ nie będzie spełniać wymagań, to funkcja wyrzuci wyjątek (zob. \ref{nonlocal}).
+      Również za pomocą wyjątku odrzucone zostanie podanie liczby iteracji mniejszej lub równej 0.
+
 		\subsection{Typy parametrów}
 			\texttt{\textbf{interval} a, \textbf{interval} b, \textbf{Function*} func, \textbf{long double} tolerance, \textbf{int} iterations, \textbf{bool\&} reached}
 
@@ -155,7 +158,7 @@
 			\end{description}
 
 		\subsection{Inne parametry}
-			Brak.
+			Brak. Jeśli początkowy przedział $[a, b]$ nie będzie spełniać wymagań, to funkcja wyrzuci wyjątek (zob. \ref{nonlocal}).
 
 		\subsection{Typy parametrów}
 			\texttt{\textbf{interval} a, \textbf{interval} b, \textbf{Function*} func}
@@ -189,7 +192,7 @@
       \end{description}
 
 		\subsection{Inne parametry}
-      Brak.
+      Brak. Jeśli początkowy przedział $[a, b]$ nie będzie spełniać wymagań, to funkcja wyrzuci wyjątek (zob. \ref{nonlocal}).
 
 		\subsection{Typy parametrów}
       \texttt{\textbf{interval} a, \textbf{interval} b, \textbf{Function*} func}
