@@ -7,16 +7,12 @@ interval Bisection(interval a, interval b, Function *func, long double tolerance
         throw NOT_ENOUGH_ITERATIONS;
     }
 
-    interval x, y;
-    interval right, left, mid;
+    interval x, y, right, left, mid;
     x = hull(a, b);
     long double midpoint;
-
-    int i = 0;
     reached = false;
-    do {
-        ++i;
 
+    for (int i = 0; i < iterations; i++) {
         midpoint = median(x);
         left = interval(lower(x), midpoint);
         mid = interval(midpoint);
@@ -24,7 +20,7 @@ interval Bisection(interval a, interval b, Function *func, long double tolerance
 
         y = func->evaluate(mid);
 
-        if ((singleton(y) && cereq(y, 0.0l))) {
+        if (singleton(y) && cereq(y, 0.0l)) {
             reached = true;
             return mid;
         }
@@ -36,12 +32,10 @@ interval Bisection(interval a, interval b, Function *func, long double tolerance
 
         if (zero_in(func->evaluate(left))) {
             x = left;
-        } else if (zero_in(func->evaluate(right))) {
-            x = right;
         } else {
-            throw -100;
+            x = right;
         }
-    } while (i < iterations);
+    }
 
     return x;
 }
