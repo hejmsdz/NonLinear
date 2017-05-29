@@ -7,10 +7,10 @@ interval Secant(interval a, interval b, Function *func) {
     using namespace boost::numeric::interval_lib;
     check_interval(a, b, func);
 
-    interval fa, fb, h, x, y;
+    interval fa, fb, h, x, fx;
     h = (b - a) * 0.179372l;
-    a = a + h;
-    b = b - h;
+    a += h;
+    b -= h;
     fa = func->evaluate(a);
     fb = func->evaluate(b);
 
@@ -20,29 +20,29 @@ interval Secant(interval a, interval b, Function *func) {
     }
 
     while (true) {
-        x = fa - fb;
-        if (zero_in(x)) {
-            return b;
+        if (zero_in(fa - fb)) {
+            break;
         }
 
-        h = b - a;
-        x = b + fb*h/x;
-        y = func->evaluate(x);
-        if (overlap(a, x) || overlap(b, x) || zero_in(y)) {
-            return hull(a, b);
+        x = b + fb * (b - a) / (fa - fb);
+        fx = func->evaluate(x);
+        if (overlap(a, x) || overlap(b, x) || (singleton(fx) && zero_in(fx))) {
+            break;
         }
 
         fa = fb;
-        fb = y;
+        fb = fx;
         a = b;
         b = x;
     }
+
+    return hull(x, hull(a, b));
 }
 
 long double Secant(long double a, long double b, Function *func) {
     check_interval(a, b, func);
 
-    long double fa, fb, h, x, y;
+    long double fa, fb, h, x, fx;
     h = (b - a) * 0.179372l;
     a = a + h;
     b = b - h;
@@ -55,20 +55,18 @@ long double Secant(long double a, long double b, Function *func) {
     }
 
     while (true) {
-        x = fa - fb;
-        if (x == 0.0l) {
+        if (fa - fb == 0.0l) {
             return b;
         }
 
-        h = b - a;
-        x = b + fb*h/x;
-        y = func->evaluate(x);
-        if (a == x || b == x || y == 0.0l) {
+        x = b + fb * (b - a) / (fa - fb);
+        fx = func->evaluate(x);
+        if (a == x || b == x || fx == 0.0l) {
             return x;
         }
 
         fa = fb;
-        fb = y;
+        fb = fx;
         a = b;
         b = x;
     }
