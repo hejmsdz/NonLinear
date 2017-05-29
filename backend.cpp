@@ -79,7 +79,7 @@ interval Backend::stringToInterval(const std::string &value, char separator) {
     return interval(left, right);
 }
 
-struct SingleFloatSummary Backend::floatSummary(long double solution) {
+struct SingleFloatSummary Backend::floatSummary(long double solution, std::string more) {
     struct SingleFloatSummary out;
 
     std::stringstream str;
@@ -95,10 +95,12 @@ struct SingleFloatSummary Backend::floatSummary(long double solution) {
     out.y = str.str();
     str.str(std::string());
 
+    out.more = more;
+
     return out;
 }
 
-struct SingleIntervalSummary Backend::intervalSummary(interval solution) {
+struct SingleIntervalSummary Backend::intervalSummary(interval solution, std::string more) {
     struct SingleIntervalSummary out;
 
     std::stringstream str;
@@ -121,6 +123,8 @@ struct SingleIntervalSummary Backend::intervalSummary(interval solution) {
 
     interval y = function->evaluate(solution);
     out.y = intervalToString(y, decimals);
+
+    out.more = more;
 
     return out;
 }
@@ -151,8 +155,8 @@ struct FloatSummary Backend::solveFloatingPoint(const std::string &a_str, const 
         out.secant = floatSummary(x);
 
         bool reached;
-        x = Bisection(a, b, function, 1e-16, 60, reached);
-        out.bisection = floatSummary(x);
+        x = Bisection(a, b, function, bisectionTolerance, bisectionIterations, reached);
+        out.bisection = floatSummary(x, std::string("reached = ")+(reached?"true":"false"));
     } catch(int err) {
         if (err == WRONG_INTERVAL) {
             throw "Lewy koniec przedziału musi być mniejszy od prawego końca!";
@@ -179,8 +183,8 @@ struct IntervalSummary Backend::solveInterval(const std::string &a_str, const st
         out.secant = intervalSummary(x);
 
         bool reached;
-        x = Bisection(a, b, function, 1e-16, 60, reached);
-        out.bisection = intervalSummary(x);
+        x = Bisection(a, b, function, bisectionTolerance, bisectionIterations, reached);
+        out.bisection = intervalSummary(x, std::string("reached = ")+(reached?"true":"false"));
     } catch(int err) {
         if (err == WRONG_INTERVAL) {
             throw "Lewy koniec przedziału musi być mniejszy od prawego końca!";

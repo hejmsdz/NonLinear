@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>666</width>
-    <height>423</height>
+    <height>525</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>651</width>
-      <height>362</height>
+      <width>611</width>
+      <height>481</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -46,7 +46,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0" colspan="2">
+     <item row="4" column="0" colspan="2">
       <widget class="QTableView" name="result"/>
      </item>
      <item row="1" column="0">
@@ -94,7 +94,7 @@
        </layout>
       </widget>
      </item>
-     <item row="2" column="0" colspan="2">
+     <item row="3" column="0" colspan="2">
       <widget class="QPushButton" name="solve">
        <property name="enabled">
         <bool>false</bool>
@@ -143,18 +143,78 @@
           </item>
          </layout>
         </item>
-        <item row="1" column="0">
-         <widget class="QSpinBox" name="decimals">
-          <property name="minimum">
-           <number>2</number>
-          </property>
-          <property name="maximum">
-           <number>50</number>
-          </property>
-          <property name="value">
-           <number>10</number>
-          </property>
-         </widget>
+       </layout>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QGroupBox" name="groupBox_3">
+       <property name="title">
+        <string>Opcje</string>
+       </property>
+       <layout class="QFormLayout" name="formLayout_6">
+        <item row="0" column="0">
+         <layout class="QFormLayout" name="formLayout_5">
+          <item row="0" column="0">
+           <widget class="QLabel" name="decimalsLabel">
+            <property name="text">
+             <string>precyzja wyniku:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="decimals">
+            <property name="minimum">
+             <number>2</number>
+            </property>
+            <property name="maximum">
+             <number>50</number>
+            </property>
+            <property name="value">
+             <number>10</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="bisectionToleranceLabel">
+            <property name="text">
+             <string>tolerancja m. bisekcji (10^x):</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="bisectionTolerance">
+            <property name="minimum">
+             <number>-50</number>
+            </property>
+            <property name="maximum">
+             <number>50</number>
+            </property>
+            <property name="value">
+             <number>-16</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="bisectionIterations">
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>1000</number>
+            </property>
+            <property name="value">
+             <number>60</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="bisectionIterationsLabel">
+            <property name="text">
+             <string>liczba iteracji m. bisekcji:</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>

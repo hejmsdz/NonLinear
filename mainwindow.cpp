@@ -27,6 +27,7 @@ void MainWindow::showFloatSummary(struct FloatSummary summary) {
 
     cols.append("x");
     cols.append("y");
+    cols.append("+");
 
     rows.append("bisekcja");
     rows.append("regula falsi");
@@ -38,10 +39,13 @@ void MainWindow::showFloatSummary(struct FloatSummary summary) {
 
     model->setItem(0, 0, new QStandardItem(QString::fromStdString(summary.bisection.x)));
     model->setItem(1, 0, new QStandardItem(QString::fromStdString(summary.bisection.y)));
+    model->setItem(2, 0, new QStandardItem(QString::fromStdString(summary.bisection.more)));
     model->setItem(0, 1, new QStandardItem(QString::fromStdString(summary.regulafalsi.x)));
     model->setItem(1, 1, new QStandardItem(QString::fromStdString(summary.regulafalsi.y)));
+    model->setItem(2, 1, new QStandardItem(QString::fromStdString(summary.regulafalsi.more)));
     model->setItem(0, 2, new QStandardItem(QString::fromStdString(summary.secant.x)));
     model->setItem(1, 2, new QStandardItem(QString::fromStdString(summary.secant.y)));
+    model->setItem(2, 2, new QStandardItem(QString::fromStdString(summary.secant.more)));
 
     ui->result->setModel(model);
     ui->result->resizeRowsToContents();
@@ -60,6 +64,7 @@ void MainWindow::showIntervalSummary(struct IntervalSummary summary) {
     cols.append("m(x)");
     cols.append("d(x)");
     cols.append("y");
+    cols.append("+");
 
     rows.append("bisekcja");
     rows.append("regula falsi");
@@ -73,14 +78,17 @@ void MainWindow::showIntervalSummary(struct IntervalSummary summary) {
     model->setItem(1, 0, new QStandardItem(QString::fromStdString(summary.bisection.median)));
     model->setItem(2, 0, new QStandardItem(QString::fromStdString(summary.bisection.width)));
     model->setItem(3, 0, new QStandardItem(QString::fromStdString(summary.bisection.y)));
+    model->setItem(4, 0, new QStandardItem(QString::fromStdString(summary.bisection.more)));
     model->setItem(0, 1, new QStandardItem(QString::fromStdString(summary.regulafalsi.x)));
     model->setItem(1, 1, new QStandardItem(QString::fromStdString(summary.regulafalsi.median)));
     model->setItem(2, 1, new QStandardItem(QString::fromStdString(summary.regulafalsi.width)));
     model->setItem(3, 1, new QStandardItem(QString::fromStdString(summary.regulafalsi.y)));
+    model->setItem(4, 1, new QStandardItem(QString::fromStdString(summary.regulafalsi.more)));
     model->setItem(0, 2, new QStandardItem(QString::fromStdString(summary.secant.x)));
     model->setItem(1, 2, new QStandardItem(QString::fromStdString(summary.secant.median)));
     model->setItem(2, 2, new QStandardItem(QString::fromStdString(summary.secant.width)));
     model->setItem(3, 2, new QStandardItem(QString::fromStdString(summary.secant.y)));
+    model->setItem(4, 2, new QStandardItem(QString::fromStdString(summary.secant.more)));
 
     ui->result->setModel(model);
     ui->result->resizeRowsToContents();
@@ -115,6 +123,8 @@ void MainWindow::on_solve_clicked()
     b_str = ui->bInput->text().toStdString();
     mode = ui->intervalArithmetic->isChecked();
     backend.decimals = ui->decimals->value();
+    backend.bisectionTolerance = pow(10.0l, ui->bisectionTolerance->value());
+    backend.bisectionIterations = ui->bisectionIterations->value();
 
     try {
         if (mode == 1) {

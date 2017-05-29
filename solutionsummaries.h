@@ -4,11 +4,11 @@
 #include <string>
 
 struct SingleIntervalSummary {
-    std::string x, median, width, y;
+    std::string x, median, width, y, more;
 };
 
 struct SingleFloatSummary {
-    std::string x, y;
+    std::string x, y, more;
 };
 
 struct IntervalSummary {

@@ -9,13 +9,15 @@ class Backend
 {
     Function *function = nullptr;
 
-    struct SingleFloatSummary floatSummary(long double solution);
-    struct SingleIntervalSummary intervalSummary(interval solution);
+    struct SingleFloatSummary floatSummary(long double solution, std::string more = "");
+    struct SingleIntervalSummary intervalSummary(interval solution, std::string more = "");
 public:
     Backend();
     ~Backend();
 
     int decimals = 16;
+    long double bisectionTolerance = 1e-16;
+    int bisectionIterations = 60;
 
     static std::string intervalToString(interval x, int decimals = 16);
     static long double stringToFloat(const std::string &value);
