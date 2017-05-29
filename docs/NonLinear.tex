@@ -117,15 +117,17 @@
 		  \inputminted[firstline=3, lastline=41]{c++}{../solvers/bisection.cpp}
 
 		\subsection{Przykłady}
-			\begin{tabular}{|r|c|c|c|c||c|}
+			\begin{tabular}{|r|c|c||c|}
 				\hline
-				Równanie & a & b & liczba iteracji & $\epsilon$ & $x_0$ \\\hline
+				Równanie & a & b & $x_0$ \\\hline
 
-				$x^2 - 2 = 0$ & 1 & 2 & 60 & $10^{-16}$ & [1.41421356237309503, 1.41421356237309509] \\\hline
-				$xe^{\sqrt{x+1}} - 1 = 0$ & -1 & 1 & 60 & $10^{-16}$ & [3.17347582146508266, 3.17347582146508323] \\\hline
-				$\sin{x} \cdot (\sin{x} + \frac{1}{2}) - \frac{1}{2} = 0$ & 0 & 1 & 60 & $10^{-16}$ & [5.2359877559829803e-01, 5.2359877559829810e-01] \\\hline
+				$x^2 - 2 = 0$ & 1 & 2 & [1.41421356237309503, 1.41421356237309509] \\\hline
+				$xe^{\sqrt{x+1}} - 1 = 0$ & -1 & 1 & [3.17347582146508266, 3.17347582146508323] \\\hline
+				$\sin{x} \cdot (\sin{x} + \frac{1}{2}) - \frac{1}{2} = 0$ & [0.4, 0.5] & 1 & [5.2359877559829801e-01, 5.2359877559829809e-01] \\\hline
 
 			\end{tabular}
+
+			We wszystkich przykładach przyjęto liczbę iteracji = 60 i $\epsilon = 10^{-16}$.
 
 
 	\section{Metoda \textsl{regula falsi}}
@@ -179,8 +181,16 @@
 		\subsection{Kod źródłowy}
 			\inputminted[firstline=3, lastline=36]{c++}{../solvers/regulafalsi.cpp}
 
-
 		\subsection{Przykłady}
+			\begin{tabular}{|r|c|c||c|}
+				\hline
+				Równanie & a & b & $x_0$ \\\hline
+
+				$x^2 - 2 = 0$ & 1 & 2 & [1.4142135623730950, 1.4142135623734952]\\\hline
+				$x^2 - 2 = 0$ & 0.3 & [1.5, 1.6] & [2.9999999999999999e-01, 1.6000000000000001]\\\hline
+				$\sin{x} \cdot (\sin{x} + \frac{1}{2}) - \frac{1}{2} = 0$ & 0.1 & 1 & [5.2359877559652552e-01, 1] \\\hline
+
+			\end{tabular}
 
 	\section{Metoda siecznych}
 		\subsection{Zastosowanie}
@@ -226,6 +236,15 @@
 			\inputminted[firstline=6, lastline=39]{c++}{../solvers/secant.cpp}
 
 		\subsection{Przykłady}
+			\begin{tabular}{|r|c|c||c|}
+				\hline
+				Równanie & a & b & $x_0$ \\\hline
+
+				$x^2 - 2 = 0$ & 1 & 2 & [1.4142135623730950, 1.4142135623734952]\\\hline
+				$xe^{\sqrt{x+1}} - 1 = 0$ & -1 & 1 & [3.1734757786211827e-01, 3.1734758214652323e-01]\\\hline
+				$xe^{\sqrt{x+1}} - 1 = 0$ & [-0.5, -0.4] & [0.2, 0.4] & [-3.9237680000000000e-01, 1.2677667075395474]\\\hline
+
+			\end{tabular}
 
 	\section{Bibliografia}
 		\begin{itemize}
