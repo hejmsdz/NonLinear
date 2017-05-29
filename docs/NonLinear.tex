@@ -4,6 +4,11 @@
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
 \usepackage{amsmath}
+\usepackage{minted}
+
+\setminted{breaklines}
+\setminted{linenos=true}
+\setminted{frame=leftline}
 
 \title{Rozwiązywanie równań nieliniowych metodami połowienia, \textsl{regula falsi} i siecznych w arytmetyce przedziałowej}
 \author{Mikołaj Rozwadowski}
@@ -108,6 +113,9 @@
 					stała o wartości liczbowej 3; jest to wyjątek, którym funkcja sygnalizuje, że parametr \texttt{iterations} nie jest liczbą dodatnią.
 			\end{description}
 
+		\subsection{Kod źródłowy}
+		  \inputminted[firstline=3, lastline=41]{c++}{../solvers/bisection.cpp}
+
 		\subsection{Przykłady}
 			\begin{tabular}{|r|c|c|c|c||c|}
 				\hline
@@ -168,6 +176,10 @@
 		\subsection{Identyfikatory nielokalne}
       Brak, nie licząc wymienionych w punkcie \ref{nonlocal}.
 
+		\subsection{Kod źródłowy}
+			\inputminted[firstline=3, lastline=34]{c++}{../solvers/regulafalsi.cpp}
+
+
 		\subsection{Przykłady}
 
 	\section{Metoda siecznych}
@@ -201,6 +213,9 @@
 
 		\subsection{Identyfikatory nielokalne}
       Brak, nie licząc wymienionych w punkcie \ref{nonlocal}.
+
+		\subsection{Kod źródłowy}
+			\inputminted[firstline=6, lastline=40]{c++}{../solvers/secant.cpp}
 
 		\subsection{Przykłady}
 
