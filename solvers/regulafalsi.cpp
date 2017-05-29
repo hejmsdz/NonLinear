@@ -1,6 +1,4 @@
 #include "regulafalsi.h"
-#include "../backend.h"
-#include <iostream>
 
 interval RegulaFalsi(interval a, interval b, Function *func) {
     using namespace boost::numeric::interval_lib;
