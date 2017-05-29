@@ -177,7 +177,7 @@
       Brak, nie licząc wymienionych w punkcie \ref{nonlocal}.
 
 		\subsection{Kod źródłowy}
-			\inputminted[firstline=3, lastline=34]{c++}{../solvers/regulafalsi.cpp}
+			\inputminted[firstline=3, lastline=37]{c++}{../solvers/regulafalsi.cpp}
 
 
 		\subsection{Przykłady}
@@ -188,7 +188,15 @@
     $f(x) = 0$ metodą siecznych w arytmetyce przedziałowej.
 
 		\subsection{Opis metody}
+			Podobnie jak \textsl{regula falsi}, metoda siecznych również opiera się na interpolacji liniowej.
+			Algorytm konstruuje zbieżny do dokładnej wartości pierwiastka ciąg~przybliżeń $(x_i)$ według rekurencyjnego wzoru:
+			\begin{equation*}
+				x_i = x_{i-1} - f(x_{i-1}) \frac{x_{i-1} - x_{i-2}}{f(x_{i-1}) - f(x_{i-2})}.
+			\end{equation*}
 
+			Pierwsze przybliżenia wyznaczane są na podstawie końców przedziału początkowego jako:
+			$x_1 = a + h$, $x_2 = b - h$, $h = 0,179372 \cdot (b-a)$, przy czym jeśli nie jest spełniony warunek
+			$|f(x_1)| \geq |f(x_2)|$, to wartości te są na początku zamieniane miejscami.
 
 		\subsection{Wywołanie funkcji}
       \texttt{Secant(a, b, func)}
