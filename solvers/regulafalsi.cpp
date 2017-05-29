@@ -1,7 +1,6 @@
 #include "regulafalsi.h"
 
 interval RegulaFalsi(interval a, interval b, Function *func) {
-    using namespace boost::numeric::interval_lib;
     check_interval(a, b, func);
 
     interval fa, fb, fx, x;

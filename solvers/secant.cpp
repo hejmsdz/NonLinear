@@ -4,7 +4,6 @@
 #include <algorithm>
 
 interval Secant(interval a, interval b, Function *func) {
-    using namespace boost::numeric::interval_lib;
     check_interval(a, b, func);
 
     interval fa, fb, h, x, fx;
