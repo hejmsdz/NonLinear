@@ -13,7 +13,6 @@ interval RegulaFalsi(interval a, interval b, Function *func) {
 
     x = b - fb * (b - a) / (fb - fa);
     while (upper(a) < lower(x) && upper(x) < lower(b)) {
-
         fx = func->evaluate(x);
         sign_fx = sgn(fx);
 
@@ -24,6 +23,10 @@ interval RegulaFalsi(interval a, interval b, Function *func) {
             b = x;
             fb = fx;
         } else {
+            break;
+        }
+
+        if (zero_in(fb - fa)) {
             break;
         }
 
