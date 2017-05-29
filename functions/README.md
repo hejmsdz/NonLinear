@@ -29,6 +29,7 @@ interval evalInterval(interval x) {
 and compile it using the command above.
 You can use functions available in `cmath`and `boost::numeric::interval_lib`
 (see the [documentation](http://www.boost.org/doc/libs/1_64_0/libs/numeric/interval/doc/interval.htm)).
+Note that since interval operations are defined as templates, all numeric constants in `evalInterval` have to be `long double` literals (with a decimal point and `l` suffix). Otherwise the types will not match and your code will not compile.
 
 ## References
 
