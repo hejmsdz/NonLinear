@@ -32,7 +32,7 @@ interval RegulaFalsi(interval a, interval b, Function *func) {
         x = b - fb * (b - a) / (fb - fa);
     }
 
-    return hull(a, b);
+    return x;
 }
 
 long double RegulaFalsi(long double a, long double b, Function *func) {
