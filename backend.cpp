@@ -170,8 +170,13 @@ struct FloatSummary Backend::solveFloatingPoint(const std::string &a_str, const 
 
 struct IntervalSummary Backend::solveInterval(const std::string &a_str, const std::string &b_str) {
     interval a, b, x;
-    a = stringToInterval(a_str);
-    b = stringToInterval(b_str);
+
+    try {
+        a = stringToInterval(a_str);
+        b = stringToInterval(b_str);
+    } catch (std::runtime_error err) {
+        throw "Nie można zbudować takiego przedziału!";
+    }
 
     struct IntervalSummary out;
 
