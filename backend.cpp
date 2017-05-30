@@ -189,7 +189,7 @@ struct IntervalSummary Backend::solveInterval(const std::string &a_str, const st
         if (err == WRONG_INTERVAL) {
             throw "Lewy koniec przedziału musi być mniejszy od prawego końca!";
         } else if (err == NO_REAL_ROOTS) {
-            throw "Brak rozwiązań rzeczywistych w tym przedziale. Upewnij się, że f(a) * f(b) < 0";
+            throw "Możliwy brak rozwiązań rzeczywistych w tym przedziale. Upewnij się, że f(a) * f(b) < 0";
         }
     }
 

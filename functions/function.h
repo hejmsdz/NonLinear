@@ -5,7 +5,7 @@ using namespace boost::numeric::interval_lib;
 typedef boost::numeric::interval<
 	long double,
 	policies<
-		save_state< rounded_transc_exact<long double> >,
+		save_state< rounded_transc_std<long double> >,
 		checking_no_empty<long double>
 	>
 > interval;
