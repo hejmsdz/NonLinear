@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>666</width>
-    <height>525</height>
+    <width>793</width>
+    <height>573</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>611</width>
-      <height>481</height>
+      <width>771</width>
+      <height>531</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -45,9 +45,6 @@
         <string>Wczytaj funkcję</string>
        </property>
       </widget>
-     </item>
-     <item row="4" column="0" colspan="2">
-      <widget class="QTableView" name="result"/>
      </item>
      <item row="1" column="0">
       <widget class="QGroupBox" name="groupBox">
@@ -170,7 +167,7 @@
              <number>50</number>
             </property>
             <property name="value">
-             <number>10</number>
+             <number>16</number>
             </property>
            </widget>
           </item>
@@ -218,6 +215,9 @@
         </item>
        </layout>
       </widget>
+     </item>
+     <item row="4" column="0" colspan="2">
+      <widget class="QTableView" name="result"/>
      </item>
     </layout>
    </widget>
