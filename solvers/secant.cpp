@@ -35,7 +35,7 @@ interval Secant(interval a, interval b, Function *func) {
 }
 
 long double Secant(long double a, long double b, Function *func) {
-    check_interval(a, b, func);
+    check_interval(a, b, func, false);
 
     long double fa, fb, h, x, fx;
     h = (b - a) * 0.179372l;

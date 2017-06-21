@@ -146,17 +146,27 @@ struct FloatSummary Backend::solveFloatingPoint(const std::string &a_str, const 
     b = stringToFloat(b_str);
 
    struct FloatSummary out;
+   bool secant_only = false;
+   try {
+       check_interval(a, b, function, true);
+   } catch (int err) {
+       if (err == NO_REAL_ROOTS) {
+           secant_only = true;
+       }
+   }
 
     try {
-        x = RegulaFalsi(a, b, function);
-        out.regulafalsi = floatSummary(x);
-
         x = Secant(a, b, function);
         out.secant = floatSummary(x);
 
-        bool reached;
-        x = Bisection(a, b, function, bisectionTolerance, bisectionIterations, reached);
-        out.bisection = floatSummary(x, std::string("reached = ")+(reached?"true":"false"));
+        if (!secant_only) {
+            x = RegulaFalsi(a, b, function);
+            out.regulafalsi = floatSummary(x);
+
+            bool reached;
+            x = Bisection(a, b, function, bisectionTolerance, bisectionIterations, reached);
+            out.bisection = floatSummary(x, std::string("reached = ")+(reached?"true":"false"));
+        }
     } catch(int err) {
         if (err == WRONG_INTERVAL) {
             throw "Lewy koniec przedziału musi być mniejszy od prawego końca!";
@@ -179,17 +189,27 @@ struct IntervalSummary Backend::solveInterval(const std::string &a_str, const st
     }
 
     struct IntervalSummary out;
+    bool secant_only = false;
+    try {
+        check_interval(a, b, function, true);
+    } catch (int err) {
+        if (err == NO_REAL_ROOTS) {
+            secant_only = true;
+        }
+    }
 
     try {
-        x = RegulaFalsi(a, b, function);
-        out.regulafalsi = intervalSummary(x);
-
         x = Secant(a, b, function);
         out.secant = intervalSummary(x);
 
-        bool reached;
-        x = Bisection(a, b, function, bisectionTolerance, bisectionIterations, reached);
-        out.bisection = intervalSummary(x, std::string("reached = ")+(reached?"true":"false"));
+        if (!secant_only) {
+            bool reached;
+            x = Bisection(a, b, function, bisectionTolerance, bisectionIterations, reached);
+            out.bisection = intervalSummary(x, std::string("reached = ")+(reached?"true":"false"));
+
+            x = RegulaFalsi(a, b, function);
+            out.regulafalsi = intervalSummary(x);
+        }
     } catch(int err) {
         if (err == WRONG_INTERVAL) {
             throw "Lewy koniec przedziału musi być mniejszy od prawego końca!";

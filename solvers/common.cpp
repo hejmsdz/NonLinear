@@ -1,21 +1,21 @@
 #include "common.h"
 
-void check_interval(long double a, long double b, Function *func) {
+void check_interval(long double a, long double b, Function *func, bool require_real_roots) {
     if (a >= b) {
         throw WRONG_INTERVAL;
     }
 
-    if (func->evaluate(a) * func->evaluate(b) > 0) {
+    if (require_real_roots && func->evaluate(a) * func->evaluate(b) > 0) {
         throw NO_REAL_ROOTS;
     }
 }
 
-void check_interval(interval a, interval b, Function *func) {
+void check_interval(interval a, interval b, Function *func, bool require_real_roots) {
     if (posge(a, b)) {
         throw WRONG_INTERVAL;
     }
 
-    if (!zero_in(func->evaluate(hull(a, b)))) {
+    if (require_real_roots && !zero_in(func->evaluate(hull(a, b)))) {
         throw NO_REAL_ROOTS;
     }
 }
