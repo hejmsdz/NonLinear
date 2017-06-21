@@ -42,7 +42,7 @@
 				\item[\texttt{WRONG\_INTERVAL}] \hfill\\
 					stała o wartości liczbowej 1; jest to wyjątek, którym funkcja sygnalizuje, że w podanym przedziale początkowym lewy koniec jest większy lub równy od prawego końca,
 				\item[\texttt{NO\_REAL\_ROOTS}] \hfill\\
-					stała o wartości liczbowej 2; jest to wyjątek, którym funkcja sygnalizuje niespełnienie warunku $f(a) \cdot f(b) < 0$,
+					stała o wartości liczbowej 2; jest to wyjątek, którym funkcja sygnalizuje, że w podanym przedziale początkowym równanie nie ma rzeczywistych rozwiązań,
 				\item[\texttt{check\_interval}] \hfill\\
 					pomocnicza funkcja, która sprawdza warunki dla przedziału początkowego, a niespełnienie ich sygnalizuje zgłoszeniem jednego z powyższych wyjątków,
         \item[\texttt{sgn}] \hfill\\
@@ -65,11 +65,11 @@
 			czyli punkt $x_0 \in (a, b)$, dla którego $f(x_0) = 0$.
 
 			Algorytm rozpoczyna pracę z danym przedziałem $[a, b]$,
-			o którym wiadomo, że $f(a) \cdot f(b) < 0$.
+			o którym wiadomo, że jego obraz zawiera zero.
 			W każdej iteracji następuje wyznaczenie środka przedziału $m = \frac{a+b}{2}$
 			i podział go na dwie połowy $[a, m]$ i $[m, b]$.
-			Jeżeli $f(a) \cdot f(m) < 0$, to przeszukiwanie jest kontynuowane
-			w przedziale $[a, m]$, w przeciwnym razie $[m, b]$.
+			Jeżeli miejsce zerowe znajduje się w przedziale $[a, m]$, to przeszukiwanie jest kontynuowane
+			właśnie tam, w przeciwnym razie kolejnym sprawdzonym przedziałem będzie $[m, b]$.
 
 			Pętla powtarza się aż do momentu, w którym środek przedziału $m$ będzie miejscem zerowym funkcji.
 			Ponieważ w praktyce może to jednak nie nastąpić, do przerwania algorytmu dojdzie też,
